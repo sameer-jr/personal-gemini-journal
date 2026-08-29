@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "collections": {
+    "users": {
+      "rules": "isOwner(userId)",
+      "fields": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "lastLoginAt": { "type": "timestamp" },
+        "encryptionNoticeAcknowledged": { "type": "boolean" }
+      },
+      "subcollections": {
+        "entries": {
+          "rules": "isOwner(userId)",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "title": { "type": "string" },
+            "content": { "type": "string" },
+            "mood": { "type": "string" },
+            "tags": { "type": "array", "items": { "type": "string" } },
+            "reflection": {
+              "type": "map",
+              "fields": {
+                "summary": { "type": "string" },
+                "emotionalTone": { "type": "string" },
+                "keyTakeaways": { "type": "array", "items": { "type": "string" } },
+                "growthPrompt": { "type": "string" },
+                "mindfulnessAdvice": { "type": "string" }
+              }
+            },
+            "sentimentScore": { "type": "number" },
+            "privacyLevel": { "type": "string" },
+            "createdAt": { "type": "timestamp" },
+            "updatedAt": { "type": "timestamp" }
+          }
+        },
+        "memories": {
+          "rules": "isOwner(userId)",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "topic": { "type": "string" },
+            "keyInsight": { "type": "string" },
+            "category": { "type": "string" },
+            "confidence": { "type": "number" },
+            "referencedEntryIds": { "type": "array", "items": { "type": "string" } },
+            "updatedAt": { "type": "timestamp" }
+          }
+        },
+        "insights": {
+          "rules": "isOwner(userId)",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "period": { "type": "string" },
+            "dominantThemes": { "type": "array", "items": { "type": "string" } },
+            "emotionalTrends": { "type": "string" },
+            "strengthsIdentified": { "type": "array", "items": { "type": "string" } },
+            "actionableSuggestions": { "type": "array", "items": { "type": "string" } },
+            "generatedAt": { "type": "timestamp" }
+          }
+        }
+      }
+    }
+  }
+}

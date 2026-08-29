@@ -1,0 +1,22 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Credentials / private keys
+service-account*.json
+*-service-account*.json
+credentials*.json
+application_default_credentials.json
+*.pem
+*.key
+*.p12
+
+# Firebase/local tooling
+.firebase/
+firebase-debug.log
+bun.lock
