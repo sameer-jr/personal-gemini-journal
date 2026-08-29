@@ -1,5 +1,12 @@
 {
-  "firestore": {
-    "rules": "firestore.rules"
-  }
+  "firestore": [
+    {
+      "database": "(default)",
+      "rules": "firestore.rules"
+    },
+    {
+      "database": "ai-studio-personalgeminijo-165330be-8db5-49ff-bb9e-f6147bd12172",
+      "rules": "firestore.rules"
+    }
+  ]
 }

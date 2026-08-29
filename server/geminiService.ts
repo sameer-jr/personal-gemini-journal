@@ -69,7 +69,7 @@ Please return a single valid JSON object strictly matching this schema:
 }`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: prompt,
     config: {
       systemInstruction,
@@ -128,7 +128,7 @@ Extract 1 to 4 enduring memory items. Return a JSON array with objects matching:
 ]`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: prompt,
     config: {
       systemInstruction,
@@ -190,7 +190,7 @@ Return a valid JSON object matching:
 }`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: prompt,
     config: {
       systemInstruction,
@@ -243,7 +243,7 @@ Return a JSON array strictly matching:
 ]`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: prompt,
     config: {
       temperature: 0.7,
@@ -288,7 +288,7 @@ ${currentDraft ? `The user is currently writing about: "${currentDraft.slice(0, 
 Never lecture. Keep responses conversational, concise (2-4 paragraphs maximum), and end with a gentle question that prompts deeper understanding.`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.6-flash",
     contents: formattedHistory,
     config: {
       systemInstruction,

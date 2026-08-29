@@ -97,6 +97,10 @@ async function requireAuth(req: AuthenticatedRequest, res: Response, next: NextF
 async function startServer() {
   const app = express();
 
+  // Cloud Run sits behind Google's reverse proxy.
+  // Trust exactly one proxy hop so req.ip uses X-Forwarded-For correctly.
+  app.set("trust proxy", 1);
+
   // Helmet HTTP security headers
   const isProd = process.env.NODE_ENV === "production";
   app.use(
@@ -137,6 +141,11 @@ crossOriginEmbedderPolicy: false,
     max: 120, // max 120 requests per windowMs
     standardHeaders: true,
     legacyHeaders: false,
+    validate: {
+      // Cloud Run also sends the RFC Forwarded header.
+      // Express uses X-Forwarded-For, so intentionally ignore this validation.
+      forwardedHeader: false,
+    },
     message: {
       error: "Too Many Requests",
       message: "Rate limit exceeded. Please slow down your requests.",
@@ -397,8 +406,33 @@ crossOriginEmbedderPolicy: false,
     app.use(vite.middlewares);
   } else {
     const clientPath = path.join(process.cwd(), "dist", "client");
-    app.use(express.static(clientPath));
+
+    // Hashed Vite assets are safe to cache for a long time.
+    // Missing asset files must return 404 instead of falling back to index.html.
+    app.use(
+      "/assets",
+      express.static(path.join(clientPath, "assets"), {
+        maxAge: "1y",
+        immutable: true,
+        fallthrough: false,
+      })
+    );
+
+    // Serve other frontend files. Never cache index.html so each deployment
+    // points browsers to the newest hashed JS/CSS assets.
+    app.use(
+      express.static(clientPath, {
+        setHeaders: (res, filePath) => {
+          if (path.basename(filePath) === "index.html") {
+            res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+          }
+        },
+      })
+    );
+
+    // React SPA fallback for application routes only.
     app.get("*", (_req, res) => {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
       res.sendFile(path.join(clientPath, "index.html"));
     });
   }
