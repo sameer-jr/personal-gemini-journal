@@ -23,12 +23,12 @@ let db: Firestore;
 // Fallback config from provisioning
 const fallbackConfig = {
   apiKey: "API Key",
-  authDomain: "genai-academy-track1-506407.firebaseapp.com",
-  projectId: "genai-academy-track1-506407",
-  storageBucket: "genai-academy-track1-506407.firebasestorage.app",
-  messagingSenderId: "258257579679",
-  appId: "1:258257579679:web:5fabb8678d13731fed3caa",
-  firestoreDatabaseId: "ai-studio-personalgeminijo-165330be-8db5-49ff-bb9e-f6147bd12172",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  firestoreDatabaseId: "",
 };
 
 export function initFirebase(customConfig?: typeof fallbackConfig) {
